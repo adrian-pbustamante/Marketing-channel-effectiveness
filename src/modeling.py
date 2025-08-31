@@ -1,6 +1,7 @@
 # src/modeling.py
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import statsmodels.api as sm
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from sklearn.metrics import mean_squared_error, r2_score
@@ -69,7 +70,7 @@ def run_ols_model(X_train, y_train, X_test, y_test):
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     r2 = r2_score(y_test, y_pred)
     
-    return y_pred, rmse, r2
+    return y_pred, rmse, r2, model #i added the model
 
 def run_ridge_model_with_decay(X_train, y_train, X_test, y_test):
     """Trains, tunes, and evaluates a Ridge Regression model using pre-optimized adstock decay rates."""
@@ -93,6 +94,57 @@ def run_ridge_model_with_decay(X_train, y_train, X_test, y_test):
     r2 = r2_score(y_test, y_pred)
     
     return y_pred, rmse, r2
+
+def plot_ols_interpretation(model, X_train, y_train):
+    """Plots the contribution of each channel and CI"""
+    contributions = model.params.drop('const') * X_train
+    contributions_lower = model.conf_int()[0].drop('const')*X_train
+    contributions_upper = model.conf_int()[1].drop('const')*X_train
+    total_contributions = contributions.sum()
+    total_contributions_lower = contributions_lower.sum()
+    total_contributions_upper = contributions_upper.sum()
+    total_revenue = y_train.sum()
+
+    print("\n--- OLS Marketing Mix Model Interpretation ---")
+    print("Total Revenue Explained by Model:", total_contributions.sum())
+    print("Total Actual Revenue:", total_revenue)
+    print('\nPercentage contributions per channel:')
+
+    channel_percentages = {}
+    channel_percentages_lower = {}
+    channel_percentages_upper = {}
+    for channel in total_contributions.drop('Covid').index:
+        percentage = (total_contributions[channel] / total_contributions.sum()) * 100
+        percentage_lower = (total_contributions_lower[channel] / total_contributions.sum())*100
+        percentage_upper = (total_contributions_upper[channel] / total_contributions.sum())*100
+        channel_percentages[channel] = percentage
+        channel_percentages_lower[channel] = percentage_lower
+        channel_percentages_upper[channel] = percentage_upper
+        print(f"{channel}: {percentage:.2f}%")
+
+    contributions_df = pd.DataFrame(list(channel_percentages.items()), columns=['Channel', 'Contribution_Percentage'])
+    contributions_df['Contribution_Percentage_lower'] = list(channel_percentages_lower.values())
+    contributions_df['Contribution_Percentage_upper'] = list(channel_percentages_upper.values())
+
+    contributions_df = contributions_df.sort_values(by='Contribution_Percentage', ascending=False)
+
+    plt.figure(figsize=(10, 8))
+    sns.barplot(x='Contribution_Percentage', y='Channel', data=contributions_df)
+
+    x = contributions_df['Contribution_Percentage'].values
+    xerr_left  = x - contributions_df['Contribution_Percentage_lower'].values
+    xerr_right = contributions_df['Contribution_Percentage_upper'].values - x
+    xerr = np.vstack([xerr_left, xerr_right])
+    # y positions: seaborn draws bars in order
+    y = np.arange(len(contributions_df))
+    # add horizontal error bars
+    plt.errorbar(x, y, xerr=xerr, fmt='none', ecolor='black', capsize=4, linewidth=1)
+    plt.title('Percentage Revenue Contribution by Marketing Channel and 95% CI')
+    plt.xlabel('Contribution (%)')
+    plt.ylabel('Marketing Channel')
+    plt.grid(axis='x', linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    plt.show()
 
 def plot_predictions(y_test, y_pred_ols, y_pred_ridge):
     """Plots the actual vs. predicted revenue for both models."""

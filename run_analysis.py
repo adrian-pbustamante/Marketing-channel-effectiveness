@@ -12,7 +12,8 @@ from src.modeling import (
     find_optimal_decay_rates,
     run_ols_model,
     run_ridge_model_with_decay,
-    plot_predictions
+    plot_predictions, 
+    plot_ols_interpretation
 )
 
 # --- Configuration ---
@@ -55,7 +56,7 @@ def main():
     
     # Run OLS Model
     print(" Running OLS model...")
-    y_pred_ols, rmse_ols, r2_ols = run_ols_model(X_train, y_train, X_test, y_test)
+    y_pred_ols, rmse_ols, r2_ols, ols = run_ols_model(X_train, y_train, X_test, y_test)
     print(f"OLS Test Set RMSE: ${rmse_ols:,.2f}")
     print(f"OLS Test Set R^2: {r2_ols:.4f}")
     
@@ -64,6 +65,10 @@ def main():
     y_pred_ridge, rmse_ridge, r2_ridge = run_ridge_model_with_decay(X_train, y_train, X_test, y_test)
     print(f"Ridge Test Set RMSE: ${rmse_ridge:,.2f}")
     print(f"Ridge Test Set R^2: {r2_ridge:.4f}")
+
+    # Plot contributions of each marketing channel
+    print("Contributions of each marketing channel...")
+    plot_ols_interpretation(ols, X_train, y_train)
     
     # Plot Results
     print("Plotting results...")
