@@ -47,7 +47,7 @@ This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. I
 
 * **requirements.txt:** A list of all required Python libraries.
 
-* **mmm_model_experimentation.ipynb:** The Jupyter notebook used for initial exploration and experimentation.
+* **market_mix.ipynb:** The Jupyter notebook used for initial exploration and experimentation.
 
 
 ### How to Run the Code
