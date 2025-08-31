@@ -1,6 +1,6 @@
 # marketing-mix-model
 
-This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. It leverages advanced data science techniques to quantify the causal impact of different marketing channels on revenue. The model successfully explains over 88% of revenue variance and provides data-driven insights for optimizing marketing spend.
+This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. It leverages data science techniques to quantify the impact of different marketing channels on revenue. The model successfully explains over 88% of revenue variance and provides data-driven insights for optimizing marketing spend.
 
 
 ### Key Insights & Findings
