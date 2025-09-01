@@ -15,7 +15,9 @@ This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. I
 
     **Facebook Product Catalog Sales:** 25.34%
 
-    **Google Performance Max:** 24.28%
+    **Google Performance Brand:** 24.28%
+
+![Channel Contributions and CI](interpretation.png)
 
 **Model Validated:** The OLS model's performance was slightly better than the Ridge model on the test set (RMSE: **$470.30**), which validated that the initial variable selection and adstock transformations had already addressed any underlying data issues.
 
@@ -64,3 +66,13 @@ This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. I
 ### Model Predictions vs. Actuals
 
 ![OLS and Ridge Model Predictions on Test Set](predictions.png)
+
+### Summary and conclusions
+
+* Reliable positive drivers: Radio Ads, Facebook Product Catalog, Google Performance Brand - all have significant positive coefficients ($p\approx 0.000$, CIs exclude zero), so they are robustly associated with higher revenue in this model
+
+* Negatives inconclusive: Several channels show negative point estimates (Facebook conversions, Facebook Others, Influencers, TV Ads), but ther are not statistically significant (95% CIs include zero), so there's not reliable evidence they reduce revenue.
+
+* Multicollinearity not the main issue: Feature VIFs are modest ($\leq 3.5$).
+
+* Actionable next steps before budget decisions:  a more robust analysis is needed before making causal decisions.
