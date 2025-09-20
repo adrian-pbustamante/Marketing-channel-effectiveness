@@ -1,11 +1,12 @@
-# marketing-mix-model
+# marketing-channels-effectiveness-analysis
 
-This project demonstrates an end-to-end Marketing Mix Modeling (MMM) analysis. It leverages data science techniques to quantify the impact of different marketing channels on revenue. The model successfully explains over 88% of revenue variance and provides data-driven insights for optimizing marketing spend.
-
+This project is a Marketing Channel Effectiveness Analysis using regression-based modeling. It quantifies the incremental sales lift from various marketing channels and provides data-driven insights for optimizing marketing spend.
 
 ### Key Insights & Findings
 
 **The Model is Statistically Robust:** A multicollinearity check using VIF confirmed that all variables are independent, with scores well below the threshold of 5. The OLS model achieved a high R² of **0.882**, explaining a significant portion of the total revenue.
+**The Model Is Statistically Robust:** A multicollinearity check using VIF confirmed that all variables are independent, with scores well below the threshold of 5. The model demonstrated strong predictive power on the test set, with a low RMSE, indicating that it accurately captures the relationships between marketing spend and sales.
+
 
 **Optimized Adstock Rates Revealed Channel-Specific Behavior:** By tuning the adstock decay rates, the model found that channels like **Google Performance Max** and **Radio Ads** have a short-term, fast-decaying impact, while others like **Influencers** and **TV Ads** have a long-lasting effect.
 
