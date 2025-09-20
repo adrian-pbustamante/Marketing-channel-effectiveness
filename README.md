@@ -4,13 +4,12 @@ This project is a Marketing Channel Effectiveness Analysis using regression-base
 
 ### Key Insights & Findings
 
-**The Model is Statistically Robust:** A multicollinearity check using VIF confirmed that all variables are independent, with scores well below the threshold of 5. The OLS model achieved a high R² of **0.882**, explaining a significant portion of the total revenue.
 **The Model Is Statistically Robust:** A multicollinearity check using VIF confirmed that all variables are independent, with scores well below the threshold of 5. The model demonstrated strong predictive power on the test set, with a low RMSE, indicating that it accurately captures the relationships between marketing spend and sales.
 
 
 **Optimized Adstock Rates Revealed Channel-Specific Behavior:** By tuning the adstock decay rates, the model found that channels like **Google Performance Max** and **Radio Ads** have a short-term, fast-decaying impact, while others like **Influencers** and **TV Ads** have a long-lasting effect.
 
-**Top-Performing Channels Were Identified:** The model successfully attributed revenue to the marketing channels. The top three contributors were:
+**Top-Performing Channels Identified:** The model successfully attributed incremental sales lift to the marketing channels. The top three contributors to sales lift were:
 
     **Radio Ads:** 30.12%
 
@@ -20,8 +19,7 @@ This project is a Marketing Channel Effectiveness Analysis using regression-base
 
 ![Channel Contributions and CI](interpretation.png)
 
-**Model Validated:** The OLS model's performance was slightly better than the Ridge model on the test set (RMSE: **$470.30**), which validated that the initial variable selection and adstock transformations had already addressed any underlying data issues.
-
+**Model Validated:** The OLS model's performance was evaluated on a temporal test set, with a low RMSE ($470.30) confirming its out-of-sample predictive accuracy. The performance of both the OLS and Ridge models was compared to ensure the stability and robustness of the coefficients.
 
 ### Methodology
 
